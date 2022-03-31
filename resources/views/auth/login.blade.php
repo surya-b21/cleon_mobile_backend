@@ -1,5 +1,43 @@
 <x-guest-layout>
+
     <x-auth-card>
+        <x-slot name="logo">
+            <div class="mx-auto h-1/2 w-1/2">
+                <img src="{{ asset('img/main-logo.png') }}" alt="main-logo.png">
+            </div>
+        </x-slot>
+
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+        <div class="flex-auto px-4 lg:px-10 py-10 pt-8">
+            <form>
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-slate-600 text-xs font-bold mb-2"
+                        for="grid-password">Email</label><input type="email"
+                        class="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Email" />
+                </div>
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-slate-600 text-xs font-bold mb-2"
+                        for="grid-password">Password</label><input type="password"
+                        class="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Password" />
+                </div>
+                <div class="text-center mt-6">
+                    <button
+                        class="bg-slate-800 text-white active:bg-slate-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="button">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
+    </x-auth-card>
+    {{-- <x-auth-card>
         <x-slot name="logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -52,5 +90,5 @@
                 </x-button>
             </div>
         </form>
-    </x-auth-card>
+    </x-auth-card> --}}
 </x-guest-layout>
