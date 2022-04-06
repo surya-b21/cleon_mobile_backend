@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class User extends Model
 {
-    use HasFactory, MustVerifyEmail;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
