@@ -1,6 +1,9 @@
 <x-app-layout>
-    <x-navbar></x-navbar>
-    <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12">
+    @include('layouts.navbar', ['header' => 'Dashboard', 'route' => route('dashboard')])
+    {{-- <x-slot name="style">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    </x-slot> --}}
+    <div class="relative bg-primary md:pt-32 pb-32 pt-12">
         <div class="px-4 md:px-10 mx-auto w-full">
             <div>
                 <!-- Card stats -->
@@ -14,13 +17,13 @@
                                             Total Transaksi
                                         </h5>
                                         <span class="font-semibold text-xl text-blueGray-700">
-                                            350,897
+                                            {{ $total_transaksi }}
                                         </span>
                                     </div>
                                     <div class="relative w-auto pl-4 flex-initial">
                                         <div
                                             class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
-                                            <i class="far fa-chart-bar"></i>
+                                            <i class="fas fa-file-invoice"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -36,13 +39,13 @@
                                             Total Pengguna
                                         </h5>
                                         <span class="font-semibold text-xl text-blueGray-700">
-                                            2,356
+                                            {{ $total_transaksi }}
                                         </span>
                                     </div>
                                     <div class="relative w-auto pl-4 flex-initial">
                                         <div
                                             class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500">
-                                            <i class="fas fa-chart-pie"></i>
+                                            <i class="fas fa-users"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -68,130 +71,31 @@
                                 <button
                                     class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button">
-                                    See all
+                                    Lihat
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="block w-full overflow-x-auto">
                         <!-- Projects table -->
-                        <table class="items-center w-full bg-transparent border-collapse">
+                        <table class="items-center w-full bg-transparent border-collapse" id="transaksi">
                             <thead>
                                 <tr>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Page name
+                                        Nama
                                     </th>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Visitors
+                                        Paket
                                     </th>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Unique users
-                                    </th>
-                                    <th
-                                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Bounce rate
+                                        Tanggal Transaksi
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        /argon/
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        4,569
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        340
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                                        46,53%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        /argon/index.html
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        3,985
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        319
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <i class="fas fa-arrow-down text-orange-500 mr-4"></i>
-                                        46,53%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        /argon/charts.html
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        3,513
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        294
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <i class="fas fa-arrow-down text-orange-500 mr-4"></i>
-                                        36,49%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        /argon/tables.html
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        2,050
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        147
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <i class="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                                        50,87%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        /argon/profile.html
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        1,795
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        190
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <i class="fas fa-arrow-down text-red-500 mr-4"></i>
-                                        46,53%
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -210,145 +114,27 @@
                                 <button
                                     class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button">
-                                    See all
+                                    Lihat
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="block w-full overflow-x-auto">
                         <!-- Projects table -->
-                        <table class="items-center w-full bg-transparent border-collapse">
+                        <table class="items-center w-full bg-transparent border-collapse" id="user">
                             <thead class="thead-light">
                                 <tr>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Referral
+                                        Nama
                                     </th>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Visitors
-                                    </th>
-                                    <th
-                                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                                        Email
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        Facebook
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        1,480
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div class="flex items-center">
-                                            <span class="mr-2">60%</span>
-                                            <div class="relative w-full">
-                                                <div class="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                                                    <div style="width: 60%"
-                                                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        Facebook
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        5,480
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div class="flex items-center">
-                                            <span class="mr-2">70%</span>
-                                            <div class="relative w-full">
-                                                <div class="overflow-hidden h-2 text-xs flex rounded bg-emerald-200">
-                                                    <div style="width: 70%"
-                                                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        Google
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        4,807
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div class="flex items-center">
-                                            <span class="mr-2">80%</span>
-                                            <div class="relative w-full">
-                                                <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
-                                                    <div style="width: 80%"
-                                                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        Instagram
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        3,678
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div class="flex items-center">
-                                            <span class="mr-2">75%</span>
-                                            <div class="relative w-full">
-                                                <div class="overflow-hidden h-2 text-xs flex rounded bg-lightBlue-200">
-                                                    <div style="width: 75%"
-                                                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-lightBlue-500">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                        twitter
-                                    </th>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        2,645
-                                    </td>
-                                    <td
-                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div class="flex items-center">
-                                            <span class="mr-2">30%</span>
-                                            <div class="relative w-full">
-                                                <div class="overflow-hidden h-2 text-xs flex rounded bg-orange-200">
-                                                    <div style="width: 30%"
-                                                        class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -356,4 +142,27 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function(){
+            $('#transaksi').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{route('get10transaksi')}}",
+                "searching": false,
+                "paging": false,
+                // "pagingType": "full",
+            });
+            $('#user').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{route('get10user')}}",
+                "searching": false,
+                "paging": false,
+                // "pagingType": "full",
+            });
+        });
+    </script>
 </x-app-layout>

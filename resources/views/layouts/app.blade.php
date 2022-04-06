@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/notus.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" />
+    {!! $style ?? null !!}
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,7 +24,7 @@
 <body class="font-sans antialiased">
     <div class="root">
         @include('layouts.sidebar')
-        <div class="relative md:ml-64 bg-blueGray-50">
+        <div class="relative md:ml-64">
             {{-- @include('layouts.navbar') --}}
 
             <main>

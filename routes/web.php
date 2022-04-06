@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\Admin\PenggunaController;
+use App\Http\Controllers\Admin\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +21,15 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/get10transaksi', [DashboardController::class, 'get10Transaksi'])->name('get10transaksi');
+    Route::get('/get10user', [DashboardController::class, 'get10user'])->name('get10user');
+    Route::prefix('pengguna')->as('pengguna.')->group(function(){
+        Route::resource('/', PenggunaController::class)->except('show');
+    });
+    Route::prefix('transaksi')->as('transaksi.')->group(function(){
+        Route::resource('/', TransaksiController::class)->except('show');
+    });
 });
 
 // Route::get('/', function () {

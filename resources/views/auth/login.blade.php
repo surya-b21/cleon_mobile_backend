@@ -10,9 +10,6 @@
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
         <div class="flex-auto px-4 lg:px-10 py-10 pt-8">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -24,6 +21,7 @@
                         name="username"
                         value="{{old('username')}}"
                         placeholder="Username" />
+                        <x-auth-validation-errors name="username" />
                 </div>
                 <div class="relative w-full mb-3">
                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -32,6 +30,7 @@
                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         name="password"
                         placeholder="Password" />
+                        <x-auth-validation-errors name="password" />
                 </div>
                 <div class="text-center mt-6">
                     <button

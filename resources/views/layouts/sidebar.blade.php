@@ -3,33 +3,16 @@
     <div
         class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
         <button
-            class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+            class="cursor-pointer text-white opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-blueGray-700 rounded border border-solid border-transparent"
             type="button" onclick="toggleNavbar('example-collapse-sidebar')">
             <i class="fas fa-bars"></i>
         </button>
-        <a class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-            href="../../index.html">
+        <a class="md:block text-left md:pb-2 text-blueGray-700 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0 hover:text-secondary"
+            href="{{route('dashboard')}}">
             Cleon Mobile
         </a>
+        <div class="h-0 my-2 border border-solid border-blueGray-900"></div>
         <ul class="md:hidden items-center flex flex-wrap list-none">
-            <li class="inline-block relative">
-                <a class="text-blueGray-500 block py-1 px-3" href="#pablo"
-                    onclick="openDropdown(event,'notification-dropdown')"><i class="fas fa-bell"></i></a>
-                <div class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                    id="notification-dropdown">
-                    <a href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Action</a><a
-                        href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Another
-                        action</a><a href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Something
-                        else here</a>
-                    <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
-                    <a href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Seprated
-                        link</a>
-                </div>
-            </li>
             <li class="inline-block relative">
                 <a class="text-blueGray-500 block" href="#pablo"
                     onclick="openDropdown(event,'user-responsive-dropdown')">
@@ -43,16 +26,15 @@
                 <div class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
                     id="user-responsive-dropdown">
                     <a href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Action</a><a
-                        href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Another
-                        action</a><a href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Something
-                        else here</a>
+                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">{{ Auth::user()->name }}</a>
                     <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
-                    <a href="#pablo"
-                        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">Seprated
-                        link</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href="{{ route('logout') }}"
+                            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+                            onclick="event.preventDefault();
+                    this.closest('form').submit();">Logout</a>
+                    </form>
                 </div>
             </li>
         </ul>
@@ -62,8 +44,8 @@
                 <div class="flex flex-wrap">
                     <div class="w-6/12">
                         <a class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                            href="../../index.html">
-                            Notus JS
+                            href="{{route('dashboard')}}">
+                            Cleon Mobile
                         </a>
                     </div>
                     <div class="w-6/12 flex justify-end">
@@ -75,41 +57,33 @@
                     </div>
                 </div>
             </div>
-            <form class="mt-6 mb-4 md:hidden">
-                <div class="mb-3 pt-0">
-                    <input type="text" placeholder="Search"
-                        class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal" />
-                </div>
-            </form>
-            <!-- Divider -->
-            <hr class="my-4 md:min-w-full" />
             <!-- Heading -->
             <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-                Admin Layout Pages
+                Menu
             </h6>
             <!-- Navigation -->
 
             <ul class="md:flex-col md:min-w-full flex flex-col list-none">
                 <li class="items-center">
-                    <a href="./dashboard.html"
-                        class="text-xs uppercase py-3 font-bold block text-pink-500 hover:text-pink-600">
+                    <a href="{{ route('dashboard') }}"
+                        class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-secondary">
                         <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                         Dashboard
                     </a>
                 </li>
 
                 <li class="items-center">
-                    <a href="./settings.html"
-                        class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500">
-                        <i class="fas fa-users mr-2 text-sm text-blueGray-300"></i>
+                    <a href="{{ route('pengguna.index') }}"
+                        class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-secondary">
+                        <i class="fas fa-users mr-2 text-sm opacity-75"></i>
                         Pengguna
                     </a>
                 </li>
 
                 <li class="items-center">
-                    <a href="./tables.html"
-                        class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500">
-                        <i class="fas fa-file-invoice mr-3 text-sm text-blueGray-300"></i>
+                    <a href="{{ route('transaksi.index') }}"
+                        class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-secondary">
+                        <i class="fas fa-file-invoice mr-3 text-sm opacity-75"></i>
                         Transaksi
                     </a>
                 </li>

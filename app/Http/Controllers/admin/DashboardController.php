@@ -3,11 +3,25 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Riwayat;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class DashboardController extends Controller
 {
     public function index() {
-        return view('admin.dashboard');
+        $total_user = DB::table('users')->get()->count();
+        $total_transaksi = DB::table('riwayat')->get()->count();
+        return view('admin.dashboard', compact(['total_user','total_transaksi']));
+    }
+
+    public function get10Transaksi() {
+        return DataTables::of(Riwayat::query()->orderByDesc('id')->limit(10))->make(true);
+    }
+
+    public function get10User() {
+        return DataTables::of(DB::table('users')->select(['name','email'])->orderByDesc('id')->limit(10))->make(true);
     }
 }
