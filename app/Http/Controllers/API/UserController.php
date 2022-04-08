@@ -27,8 +27,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
+            'password' => 'required|confirmed',
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +52,7 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             Auth::user()->OauthAcessToken()->delete();
-            return 'Logout success';
+            return response()->json(['message' => 'logout-success']);
         }
     }
 }
