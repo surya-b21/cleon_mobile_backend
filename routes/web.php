@@ -24,10 +24,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/get10transaksi', [DashboardController::class, 'get10Transaksi'])->name('get10transaksi');
     Route::get('/get10user', [DashboardController::class, 'get10user'])->name('get10user');
-    Route::prefix('pengguna')->as('pengguna.')->group(function(){
+    Route::prefix('pengguna')->as('pengguna.')->group(function () {
         Route::resource('/', PenggunaController::class)->except('show');
+        Route::get('/getuser', [PenggunaController::class, 'getuser'])->name('getuser');
     });
-    Route::prefix('transaksi')->as('transaksi.')->group(function(){
+    Route::prefix('transaksi')->as('transaksi.')->group(function () {
         Route::resource('/', TransaksiController::class)->except('show');
     });
 });
@@ -36,4 +37,4 @@ Route::middleware(['auth'])->group(function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
