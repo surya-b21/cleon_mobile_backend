@@ -151,6 +151,11 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{route('get10transaksi')}}",
+                "columns" : [
+                    {data: "id_user", name: "id_user", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"},
+                    {data: "id_paket", name: "id_paket", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"},
+                    {data: "created_at", name: "created_at", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"},
+                ],
                 "searching": false,
                 "paging": false,
                 // "pagingType": "full",
@@ -159,6 +164,10 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{route('get10user')}}",
+                "columns" : [
+                    {data: "name", name: "name", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"},
+                    {data: "email", name: "email", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"},
+                ],
                 "searching": false,
                 "paging": false,
                 // "pagingType": "full",

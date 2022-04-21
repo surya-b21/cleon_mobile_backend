@@ -25,7 +25,7 @@ Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
-Route::post('reset-password', [NewPasswordController::class, 'reset']);
+// Route::post('reset-password', [NewPasswordController::class, 'reset']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);

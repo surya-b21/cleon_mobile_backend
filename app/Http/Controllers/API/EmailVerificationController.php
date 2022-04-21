@@ -12,7 +12,7 @@ class EmailVerificationController extends Controller
     public function sendVerificationEmail(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email sudah diverifikasi']);
+            return response()->json(['pesan' => 'terverifikasi']);
         }
 
         $request->user()->sendEmailVerificationNotification();
