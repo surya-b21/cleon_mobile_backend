@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('login', [UserController::class, 'login']);
-Route::post('googlelogin', [UserController::class, 'googlelogin']);
 Route::post('register', [UserController::class, 'register']);
 
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
