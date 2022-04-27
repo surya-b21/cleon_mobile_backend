@@ -7,16 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
     public $successStatus = 200;
 
-    public function login()
+    public function login(Request $request)
     {
         if (Auth::guard('web')->attempt(['email' => request('email'), 'password' => request('password')])) {
-            $success['token'] =  Auth::guard('web')->user()->createToken('API Token')->accessToken;
+            $success['token'] =  Auth::guard('web')->user()->createToken($request->device_name)->accessToken;
             return response()->json($success, $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -28,7 +27,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => ['required|confirmed', Rules\Password::defaults()]
+            'password' => 'required|confirmed|min:8'
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +37,7 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $token['token'] =  $user->createToken('API Token')->accessToken;
+        $token['token'] =  $user->createToken($request->device_name)->accessToken;
 
         return response()->json($token, $this->successStatus);
     }
