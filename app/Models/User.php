@@ -44,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function linkedSocialAccount()
+    {
+        return $this->hasMany(LinkedSocialAccount::class);
+    }
+
     public function OauthAcessToken()
     {
         return $this->hasMany(OauthAccessToken::class);
