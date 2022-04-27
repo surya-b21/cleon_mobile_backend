@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
 use App\Notifications\ResetPasswordNotification;
+use Laravel\Sanctum\Contracts\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -43,16 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function linkedSocialAccount()
-    {
-        return $this->hasMany(LinkedSocialAccount::class);
-    }
-
-    public function OauthAcessToken()
-    {
-        return $this->hasMany(OauthAccessToken::class);
-    }
 
     public function sendPasswordResetNotification($token)
     {

@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Passport\Passport;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -15,9 +14,6 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
-    protected $policies = [
-        'App\Models\Model' => 'App\Policies\ModelPolicy',
-    ];
 
     /**
      * Register any authentication / authorization services.
@@ -27,7 +23,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Passport::routes();
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             $newUrl = "https://cleonmobile.page.link?link=" . $url;
