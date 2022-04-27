@@ -22,13 +22,15 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('login', [UserController::class, 'login']);
-Route::post('googlelogin', [UserController::class, 'googlelogin']);
 Route::post('register', [UserController::class, 'register']);
+
+Route::get('/login/{provider}', [UserController::class, 'redirectToProvider']);
+Route::get('/login/{provider}/callback', [UserController::class, 'handleProviderCallback']);
 
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
 // Route::post('reset-password', [NewPasswordController::class, 'reset']);
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
     Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
