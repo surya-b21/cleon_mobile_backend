@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Riwayat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class TransaksiController extends Controller
 {
@@ -81,5 +84,18 @@ class TransaksiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getTransaksi()
+    {
+        return DataTables::of(Riwayat::query()->select(['id_user', 'id_paket', 'username', 'password', 'created_at'])->orderByDesc('id'))
+            ->editColumn('id_user', function ($data) {
+                if ($data->id_user) {
+                    $nama = DB::table('users')->select(['name'])->where('id', $data->id_user);
+                    return $nama;
+                }
+            })
+            ->rawColumns(['id_user'])
+            ->make(true);
     }
 }

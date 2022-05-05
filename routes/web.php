@@ -29,7 +29,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/getuser', [PenggunaController::class, 'getuser'])->name('getuser');
     });
     Route::prefix('transaksi')->as('transaksi.')->group(function () {
-        Route::resource('/', TransaksiController::class)->except('show');
+        Route::resource('/', TransaksiController::class)->only('index');
+        Route::get('/gettransaksi', [TransaksiController::class, 'gettransaksi'])->name('gettransaksi');
     });
 });
 
