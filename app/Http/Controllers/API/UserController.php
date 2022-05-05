@@ -15,7 +15,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         if (Auth::guard('web')->attempt(['email' => request('email'), 'password' => request('password')])) {
-            $success['token'] =  Auth::guard('web')->user()->createToken($request->device_name)->accessToken;
+            $success['token'] =  Auth::guard('web')->user()->createToken($request->device_id)->accessToken;
             return response()->json($success, $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -37,7 +37,7 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $token['token'] =  $user->createToken($request->device_name)->accessToken;
+        $token['token'] =  $user->createToken($request->device_id)->accessToken;
 
         return response()->json($token, $this->successStatus);
     }
