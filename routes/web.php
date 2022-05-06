@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get10transaksi', [DashboardController::class, 'get10Transaksi'])->name('get10transaksi');
     Route::get('/get10user', [DashboardController::class, 'get10user'])->name('get10user');
     Route::prefix('pengguna')->as('pengguna.')->group(function () {
-        Route::resource('/', PenggunaController::class)->except('show');
+        Route::resource('/', PenggunaController::class)->except(['show', 'create', 'edit']);
         Route::get('/getuser', [PenggunaController::class, 'getuser'])->name('getuser');
     });
     Route::prefix('transaksi')->as('transaksi.')->group(function () {

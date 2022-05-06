@@ -37,7 +37,14 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        User::create($input);
     }
 
     /**
