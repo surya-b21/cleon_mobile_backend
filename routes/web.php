@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('pengguna')->as('pengguna.')->group(function () {
         Route::resource('/', PenggunaController::class)->except(['show', 'create', 'edit']);
         Route::get('/getuser', [PenggunaController::class, 'getuser'])->name('getuser');
+        Route::post('getupdate', [PenggunaController::class, 'getupdate'])->name('getupdate');
     });
     Route::prefix('transaksi')->as('transaksi.')->group(function () {
         Route::resource('/', TransaksiController::class)->only('index');

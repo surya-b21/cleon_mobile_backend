@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class PenggunaController extends Controller
@@ -37,14 +40,23 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8'
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('pengguna.index')->with('gagal', 'Gagal Menambahkan User');
+        }
+
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        User::create($input);
+        $input['email_verified_at'] = Carbon::now();
+        $user = User::create($input);
+
+
+        return redirect()->route('pengguna.index')->with('sukses', 'Berhasil Menambahkan User');
     }
 
     /**
@@ -78,7 +90,22 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('pengguna.index')->with('gagal', 'Gagal Mengupdate User');
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+
+
+        return redirect()->route('pengguna.index')->with('sukses', 'Berhasil Mengupdate User');
     }
 
     /**
@@ -89,15 +116,16 @@ class PenggunaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
     }
 
     public function getUser()
     {
-        return DataTables::of(User::query()->select(['name', 'email', 'email_verified_at'])->orderByDesc('id'))
+        return DataTables::of(User::query()->select(['id', 'name', 'email', 'email_verified_at'])->orderByDesc('id'))
             ->addColumn('aksi', function ($data) {
-                return '<button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-                <i class="fas fa-user-edit"></i></button> <button class="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                return '<button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" data-url="' . route("pengguna.update", $data->id) . '" data-id="' . $data->id . '" id="editUser" onclick="toggleModal(' . "'modal-id'" . ')" type="button">
+                <i class="fas fa-user-edit"></i></button> <button class="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" data-url="' . route("pengguna.destroy", $data->id) . '" id="hapusUser" type="button">
                 <i class="fas fa-trash"></i></button>';
             })
             ->editColumn('email_verified_at', function ($data) {
@@ -111,5 +139,11 @@ class PenggunaController extends Controller
             })
             ->rawColumns(['aksi', 'email_verified_at'])
             ->make(true);
+    }
+
+    public function getUpdate()
+    {
+        $user = User::findOrFail($_POST['id']);
+        echo json_encode($user);
     }
 }

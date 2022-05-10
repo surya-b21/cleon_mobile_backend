@@ -67,7 +67,7 @@
                 class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <!--header-->
                 <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 class="text-3xl font-semibold">
+                    <h3 class="text-3xl font-semibold" id="headerModal">
                         Tambah User
                     </h3>
                 </div>
@@ -77,7 +77,7 @@
                         @csrf
                         <label for="nama">Nama</label>
                         <div class="relative flex w-full flex-wrap items-stretch mb-3">
-                            <input type="text" placeholder="Nama" name="nama" id="nama"
+                            <input type="text" placeholder="Nama" name="name" id="name"
                                 class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
                             <span
                                 class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
@@ -90,16 +90,16 @@
                                 class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
                             <span
                                 class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-envelope"></i>
                             </span>
                         </div>
                         <label for="password">Password</label>
                         <div class="relative flex w-full flex-wrap items-stretch mb-3">
-                            <input type="text" placeholder="Password" name="password" id="password"
+                            <input type="password" placeholder="Password" name="password" id="password"
                                 class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
                             <span
                                 class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-lock"></i>
                             </span>
                         </div>
                 </div>
@@ -112,7 +112,7 @@
                     </button>
                     <button
                         class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="submit">
+                        type="submit" id="submitForm">
                         Tambah
                     </button>
                     </form>
@@ -123,7 +123,7 @@
     <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-id-backdrop"></div>
 
     <x-slot name="script">
-        <script>
+        <script type="text/javascript">
             $(function() {
                 $('#user').DataTable({
                     "processing": true,
@@ -154,7 +154,7 @@
                     // "pagingType": "full",
                 });
 
-                $("form[id='formTambah']").validate({
+                $("#formTambah").validate({
                     rules: {
                         nama: 'required',
                         email: {
@@ -167,21 +167,77 @@
                         }
                     },
 
-                    message: {
+                    messages: {
                         nama: "Silahkan mengisi nama terlebih dahulu",
                         email: "Silahkan menggunakan format email",
                         password: {
                             required: "Silahkan mengisi email terlebih dahulu",
-                            minlength: "Password minimal 8 karakter"
+                            minlength: Jquery.validator.format("Password minimal {0} karakter")
                         }
                     },
 
                     submitHandler: function(form) {
-                        // form.submit();
-                        console.log("submit");
+                        form.submit();
                     }
                 });
             })
+
+            edit('#editUser');
+            function edit(data) {
+                $(document).on('click', data, function() {
+                    var url = $(this).data('url')
+                    $('#headerModal').html("Edit User")
+                    $('#submitForm').html("Update")
+                    $('form').attr('action', url)
+                    // $('form').attr('id', 'formEdit')
+
+                    const id = $(this).data('id')
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        url: '{{ route('pengguna.getupdate') }}',
+                        data: {
+                            id: id
+                        },
+                        method: 'post',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#name').val(data.name)
+                            $('#email').val(data.email)
+                        }
+                    })
+                })
+            }
+
+            hapus('#hapusUser')
+            function hapus(data) {
+                $(document).on('click', data, function(){
+                    var url = $(this).data('url')
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Apakah anda yakin ingin menghapus user ?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya',
+                        confirmButtonColor: '#5CB85C',
+                        cancelButtonText: 'Batal',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }).then((result) => {
+                        if(result.isConfirmed) {
+                            window.location.replace(url)
+                        }
+                    })
+                })
+            }
 
             function toggleModal(modalID) {
                 document.getElementById(modalID).classList.toggle("hidden");
@@ -189,6 +245,20 @@
                 document.getElementById(modalID).classList.toggle("flex");
                 document.getElementById(modalID + "-backdrop").classList.toggle("flex");
             }
+
+            @if ($pesan = Session::get('sukses'))
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ $pesan }}'
+                })
+            @endif
+
+            @if ($pesan = Session::get('gagal'))
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ $pesan }}'
+                })
+            @endif
         </script>
     </x-slot>
 </x-app-layout>
