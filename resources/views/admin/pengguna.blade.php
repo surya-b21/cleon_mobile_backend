@@ -124,9 +124,6 @@
     <x-slot name="script">
         <script type="text/javascript">
             $(document).ready(function() {
-                $('#addButton').click(function () {
-                    console.log("click");
-                })
                 $('#user').DataTable({
                     "processing": true,
                     "serverSide": true,
@@ -174,7 +171,7 @@
                         email: "Silahkan menggunakan format email",
                         password: {
                             required: "Silahkan mengisi email terlebih dahulu",
-                            minlength: Jquery.validator.format("Password minimal {0} karakter")
+                            minlength: jQuery.validator.format("Password minimal {0} karakter")
                         }
                     },
 
@@ -246,6 +243,12 @@
                 document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
                 document.getElementById(modalID).classList.toggle("flex");
                 document.getElementById(modalID + "-backdrop").classList.toggle("flex");
+
+                $('#headerModal').html("Tambah User")
+                $('#submitForm').html("Submit")
+                $('form').attr('action', '{{route("pengguna.store")}}')
+                $('#name').val('')
+                $('#email').val('')
             }
 
             @if ($pesan = Session::get('sukses'))
