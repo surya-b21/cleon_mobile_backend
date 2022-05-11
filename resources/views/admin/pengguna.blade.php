@@ -188,7 +188,6 @@
                     $('#headerModal').html("Edit User")
                     $('#submitForm').html("Update")
                     $('form').attr('action', url)
-                    // $('form').attr('id', 'formEdit')
 
                     const id = $(this).data('id')
                     $.ajaxSetup({

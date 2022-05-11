@@ -100,10 +100,12 @@ class PenggunaController extends Controller
             return redirect()->route('pengguna.index')->with('gagal', 'Gagal Mengupdate User');
         }
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-
-
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->updated_at = Carbon::now();
+        $user->save();
 
         return redirect()->route('pengguna.index')->with('sukses', 'Berhasil Mengupdate User');
     }

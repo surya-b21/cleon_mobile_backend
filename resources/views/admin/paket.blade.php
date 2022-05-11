@@ -311,6 +311,7 @@
                 $('#submitForm').html("Submit")
                 $('form').attr('action', '{{ route('paket.jenis-paket.store') }}')
                 $('#nama').val('')
+                $('input[value=put]').remove();
             }
 
             @if ($pesan = Session::get('sukses'))
