@@ -4,7 +4,6 @@
         form .error {
             color: #ff0000;
         }
-
     </style>
     <div class="relative bg-primary md:pt-32 pb-32 pt-12">
         <div class="px-4 md:px-10 mx-auto w-full -m-24">
@@ -21,7 +20,7 @@
                                 <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                                     <button
                                         class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button" onclick="toggleModal('modal-id')">
+                                        type="button" onclick="toggleModal('modal-id')" id="addButton">
                                         <i class="fas fa-user-plus"></i>
                                     </button>
                                 </div>
@@ -124,7 +123,10 @@
 
     <x-slot name="script">
         <script type="text/javascript">
-            $(function() {
+            $(document).ready(function() {
+                $('#addButton').click(function () {
+                    console.log("click");
+                })
                 $('#user').DataTable({
                     "processing": true,
                     "serverSide": true,
@@ -154,9 +156,9 @@
                     // "pagingType": "full",
                 });
 
-                $("#formTambah").validate({
+                $("form[id=formTambah]").validate({
                     rules: {
-                        nama: 'required',
+                        name: 'required',
                         email: {
                             required: true,
                             email: true
@@ -168,7 +170,7 @@
                     },
 
                     messages: {
-                        nama: "Silahkan mengisi nama terlebih dahulu",
+                        name: "Silahkan mengisi nama terlebih dahulu",
                         email: "Silahkan menggunakan format email",
                         password: {
                             required: "Silahkan mengisi email terlebih dahulu",

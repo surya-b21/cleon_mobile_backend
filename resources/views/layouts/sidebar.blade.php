@@ -89,7 +89,7 @@
                 </li>
 
                 <li class="items-center">
-                    <a href="{{ route('transaksi.index') }}"
+                    <a href="{{ route('paket.index') }}"
                         class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-secondary">
                         <i class="fas fa-archive mr-3 text-sm opacity-75"></i>
                         List Paket

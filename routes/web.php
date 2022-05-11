@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\JenisPaketController;
+use App\Http\Controllers\admin\PaketController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\TransaksiController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +34,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('transaksi')->as('transaksi.')->group(function () {
         Route::resource('/', TransaksiController::class)->only('index');
         Route::get('/gettransaksi', [TransaksiController::class, 'gettransaksi'])->name('gettransaksi');
+    });
+    Route::prefix('paket')->as('paket.')->group(function () {
+        Route::resource('/', PaketController::class)->except(['show', 'edit', 'create']);
+        Route::resource('/jenis-paket', JenisPaketController::class)->except(['show', 'edit', 'create']);
+        Route::get('/getpaket', [PaketController::class, 'getpaket'])->name('getpaket');
+        Route::get('/getjenispaket', [JenisPaketController::class, 'getjenispaket'])->name('getjenispaket');
     });
 });
 

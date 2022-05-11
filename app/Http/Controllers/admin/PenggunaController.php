@@ -118,6 +118,8 @@ class PenggunaController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+
+        return redirect()->route('pengguna.index')->with('sukses', 'Berhasil Menghapus User');
     }
 
     public function getUser()
