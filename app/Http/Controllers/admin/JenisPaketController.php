@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JenisPaket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -80,9 +81,23 @@ class JenisPaketController extends Controller
      * @param  \App\Models\JenisPaket  $jenisPaket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JenisPaket $jenisPaket)
+    public function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'nama' => 'required'
+        ]);
+
+        if (!$validate) {
+            return redirect()->route('paket.index')->with('gagal', 'Gagal Mengupdate Jenis Paket');
+        }
+
+        $jenisPaket = JenisPaket::findOrFail($id);
+        $jenisPaket->nama = $request->nama;
+        $jenisPaket->updated_at = Carbon::now();
+        $jenisPaket->save();
+
+
+        return redirect()->route('paket.index')->with('sukses', 'Sukses Mengupdate Jenis Paket');
     }
 
     /**
@@ -91,21 +106,30 @@ class JenisPaketController extends Controller
      * @param  \App\Models\JenisPaket  $jenisPaket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JenisPaket $jenisPaket)
+    public function destroy($id)
     {
-        //
+        $jenisPaket = JenisPaket::findOrFail($id);
+        $jenisPaket->delete();
+
+        return redirect()->route('paket.index')->with('sukses', 'Sukses Menghapus Jenis Paket');
     }
 
     public function getjenispaket()
     {
         return DataTables::of(JenisPaket::query())
             ->addColumn('aksi', function ($data) {
-                return '<button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" data-url="' . route("paket.update", $data->id) . '" data-id="' . $data->id . '" id="editUser" onclick="toggleModal(' . "'modal-id'" . ')" type="button">
-                <i class="fas fa-user-edit"></i></button> <button class="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" data-url="' . route("paket.destroy", $data->id) . '" id="hapusUser" type="button">
+                return '<button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" data-url="' . route("paket.jenis-paket.update", $data->id) . '" data-id="' . $data->id . '" id="editJenisPaket" onclick="toggleModal(' . "'modal-jenis-paket'" . ')" type="button">
+                <i class="fas fa-user-edit"></i></button> <button class="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" data-url="' . route("paket.jenis-paket.destroy", $data->id) . '" id="hapusJenisPaket" type="button">
                 <i class="fas fa-trash"></i></button>';
             })
             ->addIndexColumn()
             ->rawColumns(['aksi'])
             ->make(true);
+    }
+
+    public function getUpdate()
+    {
+        $jp = JenisPaket::findOrFail($_POST['id']);
+        echo json_encode($jp);
     }
 }

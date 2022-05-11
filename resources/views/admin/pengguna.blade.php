@@ -170,7 +170,7 @@
                         name: "Silahkan mengisi nama terlebih dahulu",
                         email: "Silahkan menggunakan format email",
                         password: {
-                            required: "Silahkan mengisi email terlebih dahulu",
+                            required: "Silahkan mengisi password terlebih dahulu",
                             minlength: jQuery.validator.format("Password minimal {0} karakter")
                         }
                     },

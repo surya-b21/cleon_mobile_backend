@@ -102,7 +102,7 @@ class PenggunaController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+
 
 
         return redirect()->route('pengguna.index')->with('sukses', 'Berhasil Mengupdate User');

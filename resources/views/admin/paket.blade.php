@@ -158,115 +158,174 @@
     </div>
     <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-jenis-paket-backdrop"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(function() {
-            $('#paket').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": "{{ route('paket.getpaket') }}",
-                "columns": [{
-                        data: "nama",
-                        name: "nama",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
+    <x-slot name="script">
+        <script>
+            $(function() {
+                $('#paket').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": "{{ route('paket.getpaket') }}",
+                    "columns": [{
+                            data: "nama",
+                            name: "nama",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "harga",
+                            name: "harga",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "speed",
+                            name: "speed",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "kuota",
+                            name: "kuota",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "id_jenis",
+                            name: "id_jenis",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "keterangan",
+                            name: "keterangan",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "aksi",
+                            class: "px-6 align-middle whitespace-nowrap p-4"
+                        }
+                    ],
+                    "searching": false,
+                    "paging": false,
+                    // "pagingType": "full",
+                });
+                $('#jenisPaket').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": "{{ route('paket.getjenispaket') }}",
+                    "columns": [{
+                            data: "DT_RowIndex",
+                            name: "DT_RowIndex",
+                            orderable: false,
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "nama",
+                            name: "nama",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
+                        },
+                        {
+                            data: "aksi",
+                            orderable: false,
+                            class: "px-6 align-middle whitespace-nowrap p-4 text-center"
+                        }
+                    ],
+                    "searching": false,
+                    "paging": false,
+                    // "pagingType": "full",
+                });
+
+                $('#jenisPaketTambah').validate({
+                    rules: {
+                        nama: 'required'
                     },
-                    {
-                        data: "harga",
-                        name: "harga",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                    messages: {
+                        nama: "Silahkan mengisi nama terlebih dahulu"
                     },
-                    {
-                        data: "speed",
-                        name: "speed",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                    },
-                    {
-                        data: "kuota",
-                        name: "kuota",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                    },
-                    {
-                        data: "id_jenis",
-                        name: "id_jenis",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                    },
-                    {
-                        data: "keterangan",
-                        name: "keterangan",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                    },
-                    {
-                        data: "aksi",
-                        class: "px-6 align-middle whitespace-nowrap p-4"
+
+                    submitHandler: function(form) {
+                        form.submit();
                     }
-                ],
-                "searching": false,
-                "paging": false,
-                // "pagingType": "full",
-            });
-            $('#jenisPaket').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": "{{ route('paket.getjenispaket') }}",
-                "columns": [
-                    {
-                        data: "DT_RowIndex",
-                        name: "DT_RowIndex",
-                        orderable : false,
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                    },
-                    {
-                        data: "nama",
-                        name: "nama",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
-                    },
-                    {
-                        data: "aksi",
-                        orderable : false,
-                        class: "px-6 align-middle whitespace-nowrap p-4 text-center"
-                    }
-                ],
-                "searching": false,
-                "paging": false,
-                // "pagingType": "full",
+                })
             });
 
-            $('#jenisPaketTambah').validate({
-                rules: {
-                    nama: 'required'
-                },
-                messages: {
-                    nama: "Silahkan mengisi nama terlebih dahulu"
-                },
+            edit('#editJenisPaket');
 
-                submitHandler: function(form) {
-                    form.submit();
-                }
-            })
-        });
+            function edit(data) {
+                $(document).on('click', data, function() {
+                    var url = $(this).data('url')
+                    $('#headerModal').html("Edit Jenis Paket")
+                    $('#submitForm').html("Update")
+                    $('form').attr('action', url)
+                    $('form').append('@method("put")')
 
-        function toggleModal(modalID) {
-            document.getElementById(modalID).classList.toggle("hidden");
-            document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
-            document.getElementById(modalID).classList.toggle("flex");
-            document.getElementById(modalID + "-backdrop").classList.toggle("flex");
-        }
+                    const id = $(this).data('id')
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
 
-        @if ($pesan = Session::get('sukses'))
-            Swal.fire({
-                icon: 'success',
-                title: '{{ $pesan }}'
-            })
-        @endif
+                    $.ajax({
+                        url: '{{ route('paket.jenis-paket.getupdate') }}',
+                        data: {
+                            id: id
+                        },
+                        method: 'post',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#nama').val(data.nama)
+                        }
+                    })
+                })
+            }
 
-        @if ($pesan = Session::get('gagal'))
-            Swal.fire({
-                icon: 'error',
-                title: '{{ $pesan }}'
-            })
-        @endif
-    </script>
+            hapus('#hapusJenisPaket')
+            function hapus(data) {
+                $(document).on('click', data, function(){
+                    var url = $(this).data('url')
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Apakah anda yakin ingin menghapus jenis paket ?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya',
+                        confirmButtonColor: '#5CB85C',
+                        cancelButtonText: 'Batal',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }).then((result) => {
+                        if(result.isConfirmed) {
+                            window.location.replace(url)
+                        }
+                    })
+                })
+            }
+
+            function toggleModal(modalID) {
+                document.getElementById(modalID).classList.toggle("hidden");
+                document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
+                document.getElementById(modalID).classList.toggle("flex");
+                document.getElementById(modalID + "-backdrop").classList.toggle("flex");
+
+                $('#headerModal').html("Tambah User")
+                $('#submitForm').html("Submit")
+                $('form').attr('action', '{{ route('paket.jenis-paket.store') }}')
+                $('#nama').val('')
+            }
+
+            @if ($pesan = Session::get('sukses'))
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ $pesan }}'
+                })
+            @endif
+
+            @if ($pesan = Session::get('gagal'))
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ $pesan }}'
+                })
+            @endif
+        </script>
+    </x-slot>
 </x-app-layout>

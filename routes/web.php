@@ -37,9 +37,11 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::prefix('paket')->as('paket.')->group(function () {
         Route::resource('/', PaketController::class)->except(['show', 'edit', 'create']);
-        Route::resource('/jenis-paket', JenisPaketController::class)->except(['show', 'edit', 'create']);
+        Route::resource('/jenis-paket', JenisPaketController::class)->except(['index', 'show', 'edit', 'create', 'delete']);
+        Route::get('/jenis-paket/{id}/destroy', [JenisPaketController::class, 'destroy'])->name("jenis-paket.destroy");
         Route::get('/getpaket', [PaketController::class, 'getpaket'])->name('getpaket');
         Route::get('/getjenispaket', [JenisPaketController::class, 'getjenispaket'])->name('getjenispaket');
+        Route::post('/jenis-paket/getupdate', [JenisPaketController::class, 'getupdate'])->name('jenis-paket.getupdate');
     });
 });
 
