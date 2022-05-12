@@ -18,7 +18,7 @@ class CreatePaketsTable extends Migration
             $table->unsignedBigInteger('id_jenis');
             $table->string('nama');
             $table->integer('harga');
-            $table->integer('speed');
+            $table->float('speed');
             $table->integer('kuota');
             $table->text('keterangan');
             $table->timestamps();

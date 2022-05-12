@@ -38,10 +38,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/gettransaksi', [TransaksiController::class, 'gettransaksi'])->name('gettransaksi');
     });
     Route::prefix('paket')->as('paket.')->group(function () {
-        Route::resource('/', PaketController::class)->except(['show', 'edit', 'create']);
+        Route::resource('/', PaketController::class)->only(['index', 'store']);
+        Route::post('/{id}/update', [PaketController::class, 'update'])->name('update');
+        Route::get('/{id}/destroy', [PaketController::class, 'destroy'])->name('destroy');
         Route::resource('/jenis-paket', JenisPaketController::class)->except(['index', 'show', 'edit', 'create', 'destroy']);
         Route::get('/jenis-paket/{id}/destroy', [JenisPaketController::class, 'destroy'])->name("jenis-paket.destroy");
         Route::get('/getpaket', [PaketController::class, 'getpaket'])->name('getpaket');
+        Route::post('/getupdate', [PaketController::class, 'getupdate'])->name('getupdate');
         Route::get('/getjenispaket', [JenisPaketController::class, 'getjenispaket'])->name('getjenispaket');
         Route::post('/jenis-paket/getupdate', [JenisPaketController::class, 'getupdate'])->name('jenis-paket.getupdate');
     });
