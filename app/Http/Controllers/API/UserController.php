@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -46,6 +47,14 @@ class UserController extends Controller
     {
         $user = Auth::user();
         return response()->json($user, $this->successStatus);
+    }
+
+    public function getRiwayat()
+    {
+        $id = Auth::user()->id;
+        $riwayat = Riwayat::where('id', $id)->get();
+
+        return response()->json($riwayat, $this->successStatus);
     }
 
     public function logout()
