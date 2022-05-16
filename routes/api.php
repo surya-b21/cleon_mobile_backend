@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\EmailVerificationController;
 use App\Http\Controllers\API\NewPasswordController;
+use App\Http\Controllers\API\PaketController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('details', [UserController::class, 'details']);
     Route::get('getriwayat', [UserController::class, 'getriwayat']);
     Route::post('logout', [UserController::class, 'logout']);
+    Route::get('getpaket', [PaketController::class, 'getpaket']);
 });
