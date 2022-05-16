@@ -16,7 +16,7 @@ class Paket extends Model
         'nama',
         'harga',
         'speed',
-        'kuota',
+        'aktif',
         'keterangan'
     ];
 }

@@ -49,7 +49,7 @@
                                     </th>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Kuota
+                                        Aktif
                                     </th>
                                     <th
                                         class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -148,22 +148,24 @@
                             <input type="number" placeholder="Kecepatan Paket" name="speed" id="speedPaket"
                                 class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
                         </div>
-                        <label for="kuota">Kuota</label>
+                        <label for="kuota">Aktif</label>
                         <div class="relative flex w-full flex-wrap items-stretch mb-3">
-                            <input type="number" placeholder="Kuota Paket" name="kuota" id="kuotaPaket"
+                            <input type="number" placeholder="Masa Aktif Paket" name="aktif" id="aktifPaket"
                                 class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
                         </div>
                         <label for="jenis_paket">Jenis Paket</label>
                         <div class="relative flex w-full flex-wrap items-stretch mb-3">
-                            <select name="id_jenis" id="jenisPaket" class="px-3 py-3 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10">
+                            <select name="id_jenis" id="jenisPaket"
+                                class="px-3 py-3 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10">
                                 @foreach ($jenispaket as $data)
-                                    <option value="{{$data->id}}">{{$data->nama}}</option>
+                                    <option value="{{ $data->id }}">{{ $data->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <label for="keterangan">Keterangan</label>
                         <div class="relative flex w-full flex-wrap items-stretch mb-3">
-                            <textarea placeholder="Keterangan paket" name="keterangan" id="keteranganPaket" class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10"></textarea>
+                            <textarea placeholder="Keterangan paket" name="keterangan" id="keteranganPaket"
+                                class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10"></textarea>
                         </div>
                 </div>
                 <!--footer-->
@@ -241,17 +243,24 @@
                         {
                             data: "harga",
                             name: "harga",
-                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4",
+                            render: $.fn.dataTable.render.number('.', ',', 2, 'Rp. ')
                         },
                         {
                             data: "speed",
                             name: "speed",
-                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4",
+                            render: function (data,type,row) {
+                                return data+" Mbps";
+                            }
                         },
                         {
-                            data: "kuota",
-                            name: "kuota",
-                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                            data: "aktif",
+                            name: "aktif",
+                            class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4",
+                            render: function (data,type,row) {
+                                return data+" hari";
+                            }
                         },
                         {
                             data: "id_jenis",
@@ -348,7 +357,7 @@
                     });
 
                     $.ajax({
-                        url: '{{ route("paket.getupdate") }}',
+                        url: '{{ route('paket.getupdate') }}',
                         data: {
                             id: id
                         },
@@ -358,9 +367,10 @@
                             $('#namaPaket').val(data.nama)
                             $('#hargaPaket').val(data.harga)
                             $('#speedPaket').val(data.speed)
-                            $('#kuotaPaket').val(data.kuota)
-                            $('#jenisPaket').val(data.id_jenis)
+                            $('#aktifPaket').val(data.aktif)
                             $('#keteranganPaket').val(data.keterangan)
+                            $('select[id="jenisPaket"] option[value="' + data.id_jenis + '"]').attr(
+                                "selected", "selected")
                         }
                     })
                 })
@@ -401,7 +411,7 @@
                     $('#headerModalJenisPaket').html("Edit Jenis Paket")
                     $('#submitFormJenisPaket').html("Update")
                     $('form[id=jenisPaketTambah]').attr('action', url)
-                    $('form[id=paketTambah]').append('@method("put")')
+                    $('form[id=paketTambah]').append('@method('put')')
 
                     const id = $(this).data('id')
                     $.ajaxSetup({
@@ -468,12 +478,15 @@
                 if (modalID = 'modal-paket') {
                     $('#headerModalPaket').html("Tambah Paket")
                     $('#submitFormPaket').html("Submit")
-                    $('form[id=paketTambah]').attr('action', '{{ route("paket.store") }}')
+                    $('form[id=paketTambah]').attr('action', '{{ route('paket.store') }}')
                     $('#namaPaket').val('')
                     $('#hargaPaket').val('')
                     $('#speedPaket').val('')
                     $('#kuotaPaket').val('')
                     $('#keteranganPaket').val('')
+                    $("select[id='jenisPaket'] option").each(function() {
+                            $(this).removeAttr('selected');
+                    });
                 }
             }
 

@@ -19,7 +19,7 @@ class CreatePaketsTable extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->float('speed');
-            $table->integer('kuota');
+            $table->integer('aktif');
             $table->text('keterangan');
             $table->timestamps();
         });

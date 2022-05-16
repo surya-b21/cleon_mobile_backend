@@ -45,7 +45,7 @@ class PaketController extends Controller
             'nama' => 'required',
             'harga' => 'required',
             'speed' => 'required',
-            'kuota' => 'required',
+            'aktif' => 'required',
             'id_jenis' => 'required',
             'keterangan' => 'required'
         ]);
@@ -90,11 +90,12 @@ class PaketController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $validated = Validator::make($request->all(), [
             'nama' => 'required',
             'harga' => 'required',
             'speed' => 'required',
-            'kuota' => 'required',
+            'aktif' => 'required',
             'id_jenis' => 'required',
             'keterangan' => 'required'
         ]);
@@ -107,7 +108,7 @@ class PaketController extends Controller
         $paket->nama = $request->nama;
         $paket->harga = $request->harga;
         $paket->speed = $request->speed;
-        $paket->kuota = $request->kuota;
+        $paket->aktif = $request->aktif;
         $paket->id_jenis = $request->id_jenis;
         $paket->keterangan = $request->keterangan;
         $paket->updated_at = Carbon::now();
