@@ -49,14 +49,6 @@ class UserController extends Controller
         return response()->json($user, $this->successStatus);
     }
 
-    public function getRiwayat()
-    {
-        $id = Auth::user()->id;
-        $riwayat = Riwayat::where('id', $id)->get();
-
-        return response()->json($riwayat, $this->successStatus);
-    }
-
     public function logout()
     {
         if (Auth::check()) {
