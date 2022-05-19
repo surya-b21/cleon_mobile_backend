@@ -43,6 +43,24 @@ class UserController extends Controller
         return response()->json($token, $this->successStatus);
     }
 
+    public function gantiPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|confirmed|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        $id = Auth::id();
+        $user = User::findOrFail($id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->json(['status' => 'berhasil']);
+    }
+
     public function details()
     {
         $user = Auth::user();

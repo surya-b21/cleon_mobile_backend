@@ -39,4 +39,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('getriwayat', [RiwayatController::class, 'getriwayat']);
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('getpaket', [PaketController::class, 'getpaket']);
+    Route::post('ganti-password', [UserController::class, 'gantipassword']);
 });
