@@ -55,10 +55,13 @@ class UserController extends Controller
 
         $id = Auth::id();
         $user = User::findOrFail($id);
+        if (!password_verify($request->password_lama, $user->password)) {
+            return response()->json(['error' => 'Password lama salah'], 401);
+        }
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return response()->json(['status' => 'berhasil']);
+        return response()->json(['status' => 'Berhasil mengganti password']);
     }
 
     public function details()

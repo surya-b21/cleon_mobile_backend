@@ -30,8 +30,6 @@ Route::post('register', [UserController::class, 'register']);
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
 // Route::post('reset-password', [NewPasswordController::class, 'reset']);
 
-Route::post('gopay', [PaymentController::class, 'gopay']);
-
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
     Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
@@ -40,4 +38,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('getpaket', [PaketController::class, 'getpaket']);
     Route::post('ganti-password', [UserController::class, 'gantipassword']);
+    Route::post('gopay', [PaymentController::class, 'gopay']);
 });
