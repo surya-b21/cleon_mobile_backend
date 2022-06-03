@@ -21,8 +21,8 @@ class PaymentController extends Controller
             ),
             'payment_type' => 'gopay',
             'gopay' => array(
-                'enable_callback' => true,                // optional
-                'callback_url' => 'https://cleonmobile.page.link/payment-success'   // optional
+                'enable_callback' => true,  // optional
+                'callback_url' => 'https://cleonmobile.page.link?link=https://cleonmobile.page.link?payment-status=success&id-paket=' . $request->id_paket   // optional
             ),
             'customer_details' => array(
                 'first_name' => $user->name,

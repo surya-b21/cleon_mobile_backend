@@ -16,4 +16,9 @@ class RiwayatController extends Controller
 
         return response()->json($riwayat, 200);
     }
+
+    public function createRiwayat()
+    {
+        # code...
+    }
 }
