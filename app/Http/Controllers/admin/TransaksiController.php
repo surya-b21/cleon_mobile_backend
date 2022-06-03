@@ -91,11 +91,17 @@ class TransaksiController extends Controller
         return DataTables::of(Riwayat::query()->select(['id_user', 'id_paket', 'username', 'password', 'created_at'])->orderByDesc('id'))
             ->editColumn('id_user', function ($data) {
                 if ($data->id_user) {
-                    $nama = DB::table('users')->select(['name'])->where('id', $data->id_user);
-                    return $nama;
+                    $user = DB::table('users')->select(['name'])->where('id', $data->id_user)->first();
+                    return $user->name;
                 }
             })
-            ->rawColumns(['id_user'])
+            ->editColumn('id_paket', function ($data) {
+                if ($data->id_user) {
+                    $paket = DB::table('paket')->select(['nama'])->where('id', $data->id_user)->first();
+                    return $paket->nama;
+                }
+            })
+            ->rawColumns(['id_user', 'id_paket'])
             ->make(true);
     }
 }

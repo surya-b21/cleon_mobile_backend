@@ -16,7 +16,7 @@
                         </div>
                         <div class="block w-full overflow-x-auto">
                             <!-- Projects table -->
-                            <table class="items-center w-full bg-transparent border-collapse" id="user">
+                            <table class="items-center w-full bg-transparent border-collapse" id="transaksi">
                                 <thead class="thead-light">
                                     <tr>
                                         <th
@@ -56,11 +56,12 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
         $(function() {
-            $('#user').DataTable({
+            $('#transaksi').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ route('transaksi.gettransaksi') }}",
-                "columns": [{
+                "columns": [
+                    {
                         data: "id_user",
                         name: "id_user",
                         class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"

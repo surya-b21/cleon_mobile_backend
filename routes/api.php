@@ -39,4 +39,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('getpaket', [PaketController::class, 'getpaket']);
     Route::post('ganti-password', [UserController::class, 'gantipassword']);
     Route::post('gopay', [PaymentController::class, 'gopay']);
+    Route::post('create-riwayat', [RiwayatController::class, 'createRiwayat']);
 });
