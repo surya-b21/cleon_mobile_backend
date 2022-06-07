@@ -9,7 +9,7 @@ class LinkedSocialAccount extends Model
 {
     use HasFactory;
 
-    protected $table = ['linked_social_account'];
+    protected $table = 'linked_social_account';
 
     protected $fillable = [
         'provider_name',
