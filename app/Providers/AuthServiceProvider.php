@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
-            $newUrl = "https://cleonmobile.page.link?link=" . $url;
+            $newUrl = " https://cleonmobiledev.page.link/?apn=com.lifemedia.cleon.mobile&link=" . $url;
             return (new MailMessage)
                 ->subject('Verifikasi Email Address')
                 ->line('Click the button below to verify your email address.')

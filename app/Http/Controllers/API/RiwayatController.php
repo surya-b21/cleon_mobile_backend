@@ -7,6 +7,7 @@ use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class RiwayatController extends Controller
 {
@@ -22,11 +23,11 @@ class RiwayatController extends Controller
     {
         $idUser = Auth::user()->id;
 
-        $validated = $req->validate([
-            "id_paket" => "required",
+        $validated = Validator::make($req->all(), [
+            "id_paket" => "required"
         ]);
 
-        if (!$validated) {
+        if ($validated->fails()) {
             return response()->json(["message" => "invalid request"], 400);
         }
 
