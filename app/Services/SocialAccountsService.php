@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\LinkedSocialAccount;
+use Carbon\Carbon;
 use Laravel\Socialite\Two\User as ProviderUser;
 
 class SocialAccountsService
@@ -32,6 +33,7 @@ class SocialAccountsService
                 $user = User::create([
                     'name' => $providerUser->getName(),
                     'email' => $providerUser->getEmail(),
+                    'email_verified_at' => Carbon::now()
                 ]);
             }
 
