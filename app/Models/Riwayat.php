@@ -11,6 +11,13 @@ class Riwayat extends Model
 
     protected $table = 'riwayat';
 
+    protected $fillable = [
+        'id_user',
+        'id_paket',
+        'username',
+        'password'
+    ];
+
     protected $casts = [
         'created_at' => 'datetime:d-m-Y',
     ];

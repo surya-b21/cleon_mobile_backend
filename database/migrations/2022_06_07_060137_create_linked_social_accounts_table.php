@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaketsTable extends Migration
+class CreateLinkedSocialAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreatePaketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('paket', function (Blueprint $table) {
+        Schema::create('linked_social_account', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_jenis');
-            $table->string('nama');
-            $table->integer('harga');
-            $table->float('speed');
-            $table->integer('aktif');
-            $table->text('keterangan');
+            $table->string('provider_id');
+            $table->string('provider_name');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -32,6 +30,6 @@ class CreatePaketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paket');
+        Schema::dropIfExists('linked_social_account');
     }
 }
