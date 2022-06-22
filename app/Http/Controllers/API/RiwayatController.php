@@ -35,14 +35,6 @@ class RiwayatController extends Controller
         $username = uniqid();
         $password = uniqid();
 
-        $riwayat = new Riwayat;
-        $riwayat->id_user = $idUser;
-        $riwayat->id_paket = $req->id_paket;
-        $riwayat->username =  $username;
-        $riwayat->password = $password;
-
-        $riwayat->save();
-
         DB::table('userinfo')->insert([
             "username" => $username,
             "changeuserinfo" => 0,
@@ -56,6 +48,14 @@ class RiwayatController extends Controller
             "op" => ":=",
             "value" => "$password"
         ]);
+
+        $riwayat = new Riwayat;
+        $riwayat->id_user = $idUser;
+        $riwayat->id_paket = $req->id_paket;
+        $riwayat->username =  $username;
+        $riwayat->password = $password;
+
+        $riwayat->save();
 
         return response()->json(["username" => $riwayat->username, "password" => $riwayat->password], 201);
     }
