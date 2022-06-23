@@ -21,4 +21,14 @@ class Riwayat extends Model
     protected $casts = [
         'created_at' => 'datetime:d-m-Y',
     ];
+
+    public function paket()
+    {
+        return $this->belongsTo(Paket::class, 'id_paket');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

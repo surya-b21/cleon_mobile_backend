@@ -14,4 +14,9 @@ class JenisPaket extends Model
     protected $fillable = [
         'nama'
     ];
+
+    public function paket()
+    {
+        return $this->hasMany(Paket::class, 'id_jenis');
+    }
 }

@@ -34,6 +34,7 @@ class RiwayatController extends Controller
 
         $username = uniqid();
         $password = uniqid();
+        $paket = DB::table('paket')->where('id', $req->id_paket)->first();
 
         DB::table('userinfo')->insert([
             "username" => $username,
@@ -47,6 +48,12 @@ class RiwayatController extends Controller
             "attribute" => "Cleartext-Password",
             "op" => ":=",
             "value" => "$password"
+        ]);
+
+        DB::table('radusergroup')->insert([
+            "username" => $username,
+            "groupname" => $paket->nama,
+            "priority" => 0,
         ]);
 
         $riwayat = new Riwayat;

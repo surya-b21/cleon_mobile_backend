@@ -19,4 +19,14 @@ class Paket extends Model
         'aktif',
         'keterangan'
     ];
+
+    public function jenispaket()
+    {
+        return $this->belongsTo(JenisPaket::class, 'id_jenis');
+    }
+
+    public function riwayat()
+    {
+        return $this->hasMany(Riwayat::class, 'id_jenis');
+    }
 }
