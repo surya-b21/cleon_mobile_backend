@@ -1,5 +1,48 @@
 <x-guest-layout>
+
     <x-auth-card>
+        <x-slot name="logo">
+            <div class="mx-auto h-1/2 w-1/2">
+                <img src="{{ asset('img/main-logo.png') }}" alt="main-logo.png">
+            </div>
+        </x-slot>
+
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
+        <div class="flex-auto px-4 lg:px-10 py-10 pt-8">
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        for="grid-password">Username</label>
+                    <input type="text"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        name="username"
+                        value="{{old('username')}}"
+                        placeholder="Username" />
+                        <x-auth-validation-errors name="username" />
+                </div>
+                <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                        for="grid-password">Password</label>
+                    <input type="password"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        name="password"
+                        placeholder="Password" />
+                        <x-auth-validation-errors name="password" />
+                </div>
+                <div class="text-center mt-6">
+                    <button
+                        class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="submit">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
+    </x-auth-card>
+    {{-- <x-auth-card>
         <x-slot name="logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -19,7 +62,7 @@
             <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus />
             </div>
 
             <!-- Password -->
@@ -52,5 +95,5 @@
                 </x-button>
             </div>
         </form>
-    </x-auth-card>
+    </x-auth-card> --}}
 </x-guest-layout>

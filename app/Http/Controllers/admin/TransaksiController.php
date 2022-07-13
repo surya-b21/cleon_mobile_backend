@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Riwayat;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
+
+class TransaksiController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('admin.transaksi');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function getTransaksi()
+    {
+        return DataTables::of(Riwayat::query()->select(['id_user', 'id_paket', 'username', 'password', 'created_at'])->orderByDesc('id'))
+            ->editColumn('id_user', function ($data) {
+                if ($data->id_user) {
+                    $user = DB::table('users')->select(['name'])->where('id', $data->id_user)->first();
+                    return $user->name;
+                }
+            })
+            ->editColumn('id_paket', function ($data) {
+                if ($data->id_user) {
+                    $paket = DB::table('paket')->select(['nama'])->where('id', $data->id_user)->first();
+                    return $paket->nama;
+                }
+            })
+            ->rawColumns(['id_user', 'id_paket'])
+            ->make(true);
+    }
+}
