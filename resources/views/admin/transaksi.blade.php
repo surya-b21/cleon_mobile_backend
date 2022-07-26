@@ -63,8 +63,7 @@
                 "processing": true,
                 "serverSide": false,
                 "ajax": "{{ route('transaksi.gettransaksi') }}",
-                "columns": [
-                    {
+                "columns": [{
                         data: "id_user",
                         name: "id_user",
                         // class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
@@ -92,6 +91,10 @@
                 ],
                 "searching": true,
                 "paging": true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel'
+                ]
                 // "pagingType": "full",
             });
         })
