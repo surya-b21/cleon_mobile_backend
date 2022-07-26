@@ -97,11 +97,30 @@ class TransaksiController extends Controller
             })
             ->editColumn('id_paket', function ($data) {
                 if ($data->id_user) {
-                    $paket = DB::table('paket')->select(['nama'])->where('id', $data->id_user)->first();
+                    $paket = DB::table('paket')->select(['nama'])->where('id', $data->id_paket)->first();
                     return $paket->nama;
                 }
             })
-            ->rawColumns(['id_user', 'id_paket'])
+            ->editColumn('created_at', function ($data) {
+                $bulan = array(
+                    1 => 'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                );
+                $pisah = explode('-', date_format($data->created_at, "Y-m-d"));
+                // dd($bulan[07]);
+                return $pisah[2] . ' ' . $bulan[(int) $pisah[1]] . ' ' . $pisah[0];
+            })
+            ->rawColumns(['id_user', 'id_paket', 'created_at'])
             ->make(true);
     }
 }

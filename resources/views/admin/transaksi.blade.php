@@ -1,5 +1,8 @@
 <x-app-layout>
     @include('layouts.navbar', ['header' => 'List Transaksi', 'route' => route('transaksi.index')])
+    <x-slot name="style">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    </x-slot>
     <div class="relative bg-primary md:pt-32 pb-32 pt-12">
         <div class="px-4 md:px-10 mx-auto w-full -m-24">
             <div class="flex flex-wrap mt-20">
@@ -58,37 +61,37 @@
         $(function() {
             $('#transaksi').DataTable({
                 "processing": true,
-                "serverSide": true,
+                "serverSide": false,
                 "ajax": "{{ route('transaksi.gettransaksi') }}",
                 "columns": [
                     {
                         data: "id_user",
                         name: "id_user",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
+                        // class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
                     },
                     {
                         data: "id_paket",
                         name: "id_paket",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        // class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                     },
                     {
                         data: "username",
                         name: "username",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        // class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                     },
                     {
                         data: "password",
                         name: "password",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        // class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                     },
                     {
                         data: "created_at",
                         name: "created_at",
-                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                        // class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                     }
                 ],
-                "searching": false,
-                "paging": false,
+                "searching": true,
+                "paging": true,
                 // "pagingType": "full",
             });
         })
