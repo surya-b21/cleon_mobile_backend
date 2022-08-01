@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/', TransaksiController::class)->only('index');
         Route::get('/gettransaksi', [TransaksiController::class, 'gettransaksi'])->name('gettransaksi');
         Route::get('/export', [TransaksiController::class, 'export'])->name('export');
+        Route::get('/export-bulan/{bulan}', [TransaksiController::class, 'exportbybulan']);
+        Route::get('/export-paket/{paket}', [TransaksiController::class, 'exportbypaket']);
     });
     Route::prefix('paket')->as('paket.')->group(function () {
         Route::resource('/', PaketController::class)->only(['index', 'store']);

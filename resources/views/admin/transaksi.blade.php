@@ -16,9 +16,62 @@
                                         <h5 class="uppercase font-bold text-xs">
                                             Cetak Tabel Transaksi
                                         </h5>
+                                        <span class="font-semibold text-m text-blueGray-700">
+                                            Seluruh Data
+                                        </span>
                                     </div>
                                     <div class="relative w-auto pl-4 flex-initial">
                                         <a href="{{ route('transaksi.export') }}"
+                                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                        <div class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
+                            <div class="flex-auto p-4">
+                                <div class="flex flex-wrap">
+                                    <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                                        <h5 class="uppercase font-bold text-xs">
+                                            Cetak Berdasarkan Bulan
+                                        </h5>
+                                        <select id="bybulan" class="px-3 py-3 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10">
+                                            <option value="#">--Pilih Bulan--</option>
+                                            @foreach ($month as $data)
+                                                <option value="{{ $data->bulan_value }}">{{ $data->bulan }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="relative w-auto pl-4 flex-initial">
+                                        <a href="#" id="linkbulan"
+                                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                        <div class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
+                            <div class="flex-auto p-4">
+                                <div class="flex flex-wrap">
+                                    <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                                        <h5 class="uppercase font-bold text-xs">
+                                            Cetak Berdasarkan Paket
+                                        </h5>
+                                        <select id="bypaket" class="px-3 py-3 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:shadow-outline w-full pr-10">
+                                            <option value="#">--Pilih Paket--</option>
+                                            @foreach ($paket as $data)
+                                                <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="relative w-auto pl-4 flex-initial">
+                                        <a href="#" id="linkpaket"
                                             class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500">
                                             <i class="fas fa-file-invoice"></i>
                                         </a>
@@ -105,6 +158,16 @@
                 // ]
                 // "pagingType": "full",
             });
+
+            $('#bybulan').change(function (){
+                var bulan = $(this).val();
+                $('#linkbulan').attr('href',`{{ route("transaksi.export") }}-bulan/${bulan}`)
+            })
+
+            $('#bypaket').change(function() {
+                var paket = $(this).val()
+                $('#linkpaket').attr('href', `{{ route("transaksi.export") }}-paket/${paket}`)
+            })
         })
     </script>
 </x-app-layout>
