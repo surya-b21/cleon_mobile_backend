@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\TransaksiByBulanExport;
+use App\Exports\TransaksiByPaketExport;
+use App\Exports\TransaksiExport;
 use App\Http\Controllers\Controller;
 use App\Models\Riwayat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransaksiController extends Controller
@@ -17,73 +21,62 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        return view('admin.transaksi');
+        $month = DB::table('riwayat')->select(DB::raw('month(created_at) as bulan, month(created_at) as bulan_value'))->distinct()->get();
+
+        $list = array(
+            1 => 'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+
+        foreach ($month as $data) {
+            $data->bulan = $list[$data->bulan];
+        }
+
+        $paket = DB::table('paket')->get();
+
+        return view('admin.transaksi', compact(['month', 'paket']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function export()
     {
-        //
+        return Excel::download(new TransaksiExport, 'List Transaksi.xlsx');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function exportbybulan($bulan)
     {
-        //
+        $month = array(
+            1 => 'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+
+        return Excel::download(new TransaksiByBulanExport($bulan), 'List Transaksi Bulan ' . $month[$bulan] . '.xlsx');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function exportbypaket($paket)
     {
-        //
-    }
+        $get = DB::table('paket')->select('nama')->where('id', $paket)->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return Excel::download(new TransaksiByPaketExport($paket), 'List Transaksi Paket ' . $get->nama . '.xlsx');
     }
 
     public function getTransaksi()
@@ -97,11 +90,30 @@ class TransaksiController extends Controller
             })
             ->editColumn('id_paket', function ($data) {
                 if ($data->id_user) {
-                    $paket = DB::table('paket')->select(['nama'])->where('id', $data->id_user)->first();
+                    $paket = DB::table('paket')->select(['nama'])->where('id', $data->id_paket)->first();
                     return $paket->nama;
                 }
             })
-            ->rawColumns(['id_user', 'id_paket'])
+            ->editColumn('created_at', function ($data) {
+                $bulan = array(
+                    1 => 'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                );
+                $pisah = explode('-', date_format($data->created_at, "Y-m-d"));
+                // dd($bulan[07]);
+                return $pisah[2] . ' ' . $bulan[(int) $pisah[1]] . ' ' . $pisah[0];
+            })
+            ->rawColumns(['id_user', 'id_paket', 'created_at'])
             ->make(true);
     }
 }

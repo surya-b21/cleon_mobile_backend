@@ -1,8 +1,5 @@
 <x-app-layout>
     @include('layouts.navbar', ['header' => 'Dashboard', 'route' => route('dashboard')])
-    {{-- <x-slot name="style">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    </x-slot> --}}
     <div class="relative bg-primary md:pt-32 pb-32 pt-12">
         <div class="px-4 md:px-10 mx-auto w-full">
             <div>
@@ -68,9 +65,8 @@
                                 </h3>
                             </div>
                             <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                                <a
-                                    class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                    href="{{route('transaksi.index')}}">
+                                <a class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    href="{{ route('transaksi.index') }}">
                                     Lihat
                                 </a>
                             </div>
@@ -111,9 +107,8 @@
                                 </h3>
                             </div>
                             <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                                <a
-                                    class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                    href="{{route('pengguna.index')}}">
+                                <a class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    href="{{ route('pengguna.index') }}">
                                     Lihat
                                 </a>
                             </div>
@@ -143,18 +138,31 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
-        $(function(){
+        $(function() {
             $('#transaksi').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{route('get10transaksi')}}",
-                "columns" : [
-                    {data: "id_user", name: "id_user", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"},
-                    {data: "id_paket", name: "id_paket", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"},
-                    {data: "created_at", name: "created_at", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"},
+                "ajax": "{{ route('get10transaksi') }}",
+                "columns": [{
+                        data: "id_user",
+                        name: "id_user",
+                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
+                    },
+                    {
+                        data: "id_paket",
+                        name: "id_paket",
+                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                    },
+                    {
+                        data: "created_at",
+                        name: "created_at",
+                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                    },
                 ],
                 "searching": false,
                 "paging": false,
@@ -163,10 +171,17 @@
             $('#user').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{route('get10user')}}",
-                "columns" : [
-                    {data: "name", name: "name", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"},
-                    {data: "email", name: "email", class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"},
+                "ajax": "{{ route('get10user') }}",
+                "columns": [{
+                        data: "name",
+                        name: "name",
+                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs font-bold whitespace-nowrap p-4"
+                    },
+                    {
+                        data: "email",
+                        name: "email",
+                        class: "border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                    },
                 ],
                 "searching": false,
                 "paging": false,
