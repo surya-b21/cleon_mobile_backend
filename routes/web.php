@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\admin\JenisPaketController;
-use App\Http\Controllers\admin\PaketController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\JenisPaketController;
+use App\Http\Controllers\Admin\PaketController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\TransaksiController;
 use Illuminate\Support\Facades\Route;
